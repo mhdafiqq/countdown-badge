@@ -34,9 +34,9 @@ jobs:
           def dump_info_in_json(json_file, badge):
               with open(json_file, "w") as f:
                   json.dump(badge, f)
-
-          update_time_in_json("1000days_license.json", "2025-10-25", 1365, 1000)
-          update_time_in_json("data.json", "2026-01-25")
+          
+          update_time_in_json("1.json", "2026-01-25")
+          update_time_in_json("2.json", "2025-10-25", 1365, 1000)
           EOF
 
       - name: Commit changes
