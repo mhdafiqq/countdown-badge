@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
   "label": "Days Remaining",
-  "message": "200",
-  "color": "blue"
+  "message": "10",
+  "color": "gree"
 }
