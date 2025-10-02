@@ -1,42 +1,6 @@
-name: Update Countdown
-
-on:
-  schedule:
-    - cron: "0 0 * * *"   # runs daily at midnight UTC
-  workflow_dispatch:       # allow manual run too
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Update days remaining
-        run: |
-          python3 << 'EOF'
-          from datetime import date, datetime
-          import json
-
-          target_date = datetime.strptime("2025-12-31", "%Y-%m-%d").date()
-          today = date.today()
-          days_remaining = (target_date - today).days
-
-          badge = {
-            "schemaVersion": 1,
-            "label": "days remaining",
-            "message": str(days_remaining),
-            "color": "green" if days_remaining > 30 else "red"
-          }
-
-          with open("data.json", "w") as f:
-              json.dump(badge, f)
-          EOF
-
-      - name: Commit changes
-        run: |
-          git config user.name "GitHub Action"
-          git config user.email "actions@github.com"
-          git add data.json
-          git commit -m "Update days remaining" || echo "No changes to commit"
-          git push
-
+{
+  "schemaVersion": 1,
+  "label": "days remaining",
+  "message": "15",
+  "color": "red"
+}
