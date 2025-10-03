@@ -1,59 +1,53 @@
 name: Update Countdown
 
 on:
-  schedule:
-    - cron: "0 0 * * *"    # runs daily at midnight UTC
-  workflow_dispatch:       # allow manual run from GitHub UI
+schedule:
+- cron: "0 0 * * *"    # runs daily at midnight UTC
+workflow_dispatch:       # allow manual run from GitHub UI
 
 permissions:
-  contents: write
+contents: write
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
+build:
+runs-on: ubuntu-latest
+steps:
+- uses: actions/checkout@v3
         with:
-          fetch-depth: 0   # fetch full history (important!)
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Update days remaining
-        run: |
-          python3 << 'EOF'
-          from datetime import date, datetime
-          import json
+- name: Update days remaining
+run: |
+         python3 << 'EOF'
+         from datetime import date, datetime
+         import json
 
-          def update_time_in_json(json_file, date_str, expiration_warning_days=30, expired=0):
-              target_date = datetime.strptime(date_str, "%Y-%m-%d").date()
-              today = date.today()
-              days_remaining = (target_date - today).days
+         def update_time_in_json(json_file, date_str, expiration_warning_days=30, expired=0):
+             target_date = datetime.strptime(date_str, "%Y-%m-%d").date()
+             today = date.today()
+             days_remaining = (target_date - today).days
 
-              badge = {
-                "schemaVersion": 1,
-                "label": "Days Remaining",
-                "message": str(days_remaining) if days_remaining >= 0 else "Expired",
-                "color": "green" if days_remaining > expiration_warning_days else ("yellow" if days_remaining >= expired else "red")
-              }
-              
-              dump_info_in_json(json_file, badge)
+             badge = {
+               "schemaVersion": 1,
+               "label": "Days Remaining",
+               "message": str(days_remaining) if days_remaining >= 0 else "Expired",
+               "color": "green" if days_remaining > expiration_warning_days else ("yellow" if days_remaining >= expired else "red")
+             }
+             
+             dump_info_in_json(json_file, badge)
 
-          def dump_info_in_json(json_file, badge):
-              with open(json_file, "w") as f:
-                  json.dump(badge, f)
-          
-          update_time_in_json("1.json", "2026-01-25")
-          update_time_in_json("2.json", "2025-10-25", 1365, 1000)
-          EOF
+         def dump_info_in_json(json_file, badge):
+             with open(json_file, "w") as f:
+                 json.dump(badge, f)
+         
+         update_time_in_json("1.json", "2026-01-25")
+         update_time_in_json("2.json", "2025-10-25", 1365, 1000)
+         EOF
 
-      - name: Commit changes
-        run: |
-          git config user.name "GitHub Action"
-          git config user.email "actions@github.com"
-
-          # Pull latest changes first
-          git pull
-
-          git add -A
-          git commit -m "Update days remaining" || echo "No changes to commit"
-
-          git push --force
+     - name: Commit changes
+run: |
+         git config user.name "GitHub Action"
+         git config user.email "actions@github.com"
+         git add -A
+         git commit -m "Update days remaining" || echo "No changes to commit"
+         git push
