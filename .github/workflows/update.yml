@@ -47,8 +47,8 @@ jobs:
 
       - name: Commit changes
         run: |
-          git config user.name "GitHub Action"
           git config user.email "actions@github.com"
           git add -A
           git commit -m "Update days remaining" || echo "No changes to commit"
+          git push
           git push origin main --force
