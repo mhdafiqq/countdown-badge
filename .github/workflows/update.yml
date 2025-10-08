@@ -34,7 +34,7 @@ jobs:
                   json.dump(badge, f)
                   
           update_time_in_json("1.json", "2028-07-03")  
-          update_time_in_json("2.json", "2028-09-01")
+          update_time_in_json("2.json", "2028-07-03")
           update_time_in_json("3.json", "2028-09-01")
           update_time_in_json("4.json", "2028-07-01")  
           update_time_in_json("5.json", "2028-09-01")    
