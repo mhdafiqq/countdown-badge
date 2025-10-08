@@ -39,6 +39,7 @@ jobs:
           update_time_in_json("4.json", "2028-07-01")  
           update_time_in_json("5.json", "2028-07-03")    
           update_time_in_json("6.json", "2033-07-28", 1365, 1000)
+          update_time_in_json("5.json", "2028-07-03")
           EOF
       - name: Commit changes
         run: |
