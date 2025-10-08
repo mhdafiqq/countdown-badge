@@ -32,13 +32,9 @@ jobs:
           def dump_info_in_json(json_file, badge):
               with open(json_file, "w") as f:
                   json.dump(badge, f)
-          
-          # update_time_in_json("1.json", "2026-01-25")
-          # update_time_in_json("2.json", "2028-09-01")
-          # update_time_in_json("4.json", "2028-09-01")
-          
+
           for i in range(5):
-              update_time_in_json(f"{i}.json", "2026-01-25")
+              update_time_in_json(f"{i+1}.json", "2026-01-25")
               
           update_time_in_json("6.json", "2033-07-28", 1365, 1000)
           EOF
